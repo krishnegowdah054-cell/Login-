@@ -1,25 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Firebase Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RHK Login</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+<div class="login-box">
 
-<h1>Firebase Login</h1>
+<div class="logo">RHK</div>
 
-<input type="email" id="email" placeholder="Email">
+<p class="subtitle">Sign in to continue</p>
+
+<input type="email" id="email" placeholder="Email address">
 
 <input type="password" id="password" placeholder="Password">
 
-<button id="login">Login</button>
+<button id="login" class="login-btn">Log In</button>
 
-<button id="signup">Create Account</button>
+<button id="signup" class="signup-btn">Create Account</button>
+
+<div class="divider">
+<span>OR</span>
+</div>
+
+<button id="googleLogin" class="google-btn">
+Continue with Google
+</button>
+
+<a href="#" id="forgotPassword" class="forgot">
+Forgot Password?
+</a>
+
+<div class="phone-box">
+
+<h3>Phone Login</h3>
+
+<input type="text" id="phone" placeholder="+91XXXXXXXXXX">
+
+<div id="recaptcha-container"></div>
+
+<button id="sendOtp" class="otp-btn">
+Send OTP
+</button>
+
+<input type="text" id="otp" placeholder="Enter OTP">
+
+<button id="verifyOtp" class="verify-btn">
+Verify OTP
+</button>
+
+</div>
 
 <p id="message"></p>
 
