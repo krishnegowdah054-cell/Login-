@@ -10,7 +10,7 @@ import {
 
 // Replace these values with YOUR Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDR4hxmmIZWTdauT7B-5W6bshfyURxiuEU",
+  apiKey: "AIzaSyDR4hxmmIZWTdauT7B-5W6bshfYuRxiuEU",
   authDomain: "login-21e21.firebaseapp.com",
   projectId: "login-21e21",
   storageBucket: "login-21e21.firebasestorage.app",
