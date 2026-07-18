@@ -5,10 +5,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-// Replace these values with YOUR Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDR4hxmmIZWTdauT7B-5W6bshfYuRxiuEU",
   authDomain: "login-21e21.firebaseapp.com",
@@ -21,46 +23,68 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+const provider = new GoogleAuthProvider();
+
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-const login = document.getElementById("login");
-const signup = document.getElementById("signup");
-const logout = document.getElementById("logout");
 
-if (signup) {
-  signup.onclick = () => {
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-      .then(() => {
-        alert("Account created successfully!");
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-}
+document.getElementById("signup")?.addEventListener("click", async () => {
+  try {
+    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    alert("Account Created Successfully");
+  } catch (e) {
+    alert(e.message);
+  }
+});
 
-if (login) {
-  login.onclick = () => {
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then(() => {
-        window.location.href = "home.html";
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  };
-}
+document.getElementById("login")?.addEventListener("click", async () => {
+  try {
+    await signInWithEmailAndPassword(auth, email.value, password.value);
+    location.href = "home.html";
+  } catch (e) {
+    alert(e.message);
+  }
+});
 
-if (logout) {
-  logout.onclick = () => {
-    signOut(auth).then(() => {
-      window.location.href = "index.html";
-    });
-  };
-}
+document.getElementById("googleLogin")?.addEventListener("click", async () => {
+  try {
+    await signInWithPopup(auth, provider);
+    location.href = "home.html";
+  } catch (e) {
+    alert(e.message);
+  }
+});
+
+document.getElementById("forgotPassword")?.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  if (!email.value) {
+    alert("Enter your email first.");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email.value);
+    alert("Password reset email sent.");
+  } catch (err) {
+    alert(err.message);
+  }
+});
+
+document.getElementById("logout")?.addEventListener("click", async () => {
+  await signOut(auth);
+  location.href = "index.html";
+});
 
 onAuthStateChanged(auth, (user) => {
-  if (location.pathname.includes("home.html") && !user) {
-    window.location.href = "index.html";
+  if (location.pathname.includes("home.html")) {
+    if (!user) {
+      location.href = "index.html";
+    } else {
+      const userEmail = document.getElementById("userEmail");
+      if (userEmail) {
+        userEmail.textContent = "Logged in as: " + user.email;
+      }
+    }
   }
 });
